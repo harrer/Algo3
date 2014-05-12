@@ -1,0 +1,87 @@
+\documentclass[a4paper]{article}
+
+\usepackage{authblk}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[]{algorithm2e}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+
+\begin{document}
+
+\title{Algorithmic Bioinformatics: Graphs, Networks and Systems \\ Problem Set 4}
+
+\author{Pandu Raharja %
+  \thanks{Electronic address : \texttt{pandu.raharja@tum.de}} \\
+  Tobias Harrer %
+  \thanks{\texttt{harrert@cip.ifi.lmu.de}}}
+
+\maketitle
+
+
+\section{Problem 1}
+
+\begin{lemma}
+G is connected and has n-1 edges \(\Rightarrow\) G is cycle-free and adding any edge results result in in exactly 1 cycle
+\end{lemma}
+
+\begin{proof} We will prove the lemma by contradiction and the Cyclomatic Theorem proven during the lecture.
+\begin{itemize}
+
+\item G is cycle-free due to the fact that \(G(V) = \left\|E\right\| - \left\|V\right\| + p = n - 1 - n + 1 = 0\). 
+
+\item We now prove the second statement by contradiction. Assume that adding any edge would not result in exactly 1 cycle. 
+
+\item Adding an edge, G now has \(n - 1 + 1 = n\) edges.
+
+\item Using the formula of cyclomatic number \(v(G) = \left\|E\right\| - \left\|V\right\| + p = n - n  + 1 = 1 > 0\), we show G is not cycle-free and has exactly 1 cycle.
+
+\item This contradicts the assumption and proves the lemma.
+\end{itemize}
+\end{proof}
+
+\begin{lemma}
+G is cycle-free and adding any results result in in exactly 1 cycle \(\Rightarrow\) G is connected and removing any edge results in a disconnected graph
+\end{lemma}
+
+\begin{proof}
+We use assumptions from Lemma 1.1 and again prove by contradiction.
+
+\begin{itemize}
+\item Let G connected, cycle-free graph. \(v(G) = 0,\, \left\|V\right\| = n,\, \left\|E\right\| = n - 1\).
+
+\item We now assume removing an edge would not result in a disconnected graph (i.e. \(p = 1\)).
+
+\item Removing an edge, G now has n - 1 - 1 = n - 2 edges.
+
+\item Since the graph is already cycle-free, removing an edge won't reduce the number of cycle within the graph any further. Hence \(v(G) = 0\).
+
+\item \(v(G) = \left\|E\right\| - \left\|V\right\| + p = n - 2 - n + p = 0 \Rightarrow p = 2\). This contradicts the assumption. Thus the the lemma is proven.
+\end{itemize}
+\end{proof}
+
+\begin{lemma}
+G is connected and removing any edge results in a disconnected graph \(\Rightarrow\) \(\forall u, v \in V: \exists \, exactly \, one \, path \, u \rightarrow v\)
+\end{lemma}
+
+\begin{proof}
+We define \(\rightarrow_p\) as a connection between two nodes that goes through path \(p := (e_{i1}, \dots, e_{ij})\). Since G is connected, \(\forall u, v \in V: \exists p: u \rightarrow_p v \, or \, u \rightarrow_p v.\) Furthermore, since removing any edge will result in a disconnected graph, p is unique for all \(u\) and \(v\). Generalizing this into all nodes pair in graph G, we reach the conclusion that for all \(u\) and \(v\) there is only one unique path \(p\) connecting them.
+
+\end{proof}
+
+\section{Problem 2}
+
+\section{Problem 3: Topological Order}
+"$\Leftarrow$": G has topological Order $\Rightarrow$ G is acyclic:\newline
+Let $\{(u,v),(v,w),(w,u)\}\subseteq E$ be a cycle in $G$ and let $G = \{V,E\}$ be topologically sortable. In this case $\forall (u,v ) \in E$ $u$ must be in order before $v$. Nevertheless there is also $v$ before $u$, since we defined a cycle in $G$. This means however that $G$ is not in topological order, which was the precondition. Thus $G$ must be acyclic if it is in topological order.\newline
+"$\Rightarrow$": G is acylcic $\Rightarrow$ G is in topological order:\newline
+Let $G$ be acyclic, so for each pair of nodes u,v there is either no path between them, or at least one path between u and v or at least one path between v and u, but there are not two or more paths from u to v \textit{and} from v to u simultaneously. Otherwise this would be a cycle, which is prohibited by the precondition (let $G$ be acyclic). This results in the conclusion that $\forall (u,v)\in E: u$ is in order before $v$, which is the definition of topological order.\newline $\square$
+
+
+\end{document}
